@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const requestSchema = mongoose.Schema(
   {
-    reqNumber: { type: String, required: true },
+    reqNumber: { type: Number, required: true },
     reqPhoto: Buffer,
     ofUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     ergency: { type: Number, min: 1, max: 10, default: 1 },

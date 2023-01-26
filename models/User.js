@@ -1,59 +1,60 @@
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose')
-
-const User = new mongoose.model('User', new mongoose.Schema({
-    firstName:{
+const User = new mongoose.model(
+  'User',
+  new mongoose.Schema(
+    {
+      firstName: {
         type: String,
-        required : true,
-    },
-    lastName:{
+        required: true,
+      },
+      lastName: {
         type: String,
-        required : true,
-    },
-    email:{
+        required: true,
+      },
+      email: {
         type: String,
-        required : true,
-    },
-    password:{
+        required: true,
+      },
+      password: {
         type: String,
-        required : true,
-    },
-    phoneNumber:{
+        required: true,
+      },
+      phoneNumber: {
         type: String,
-        required : true,
-    },
-    city:{
+        required: true,
+      },
+      city: {
         type: String,
-        required : true,
-    },
-    gender:{
-        type: ['male','female','other'],
-        required : true,
-    },
-    role:{
-        type: ['citizen','inspector','municipality'],
-        required : true,
-    },
-    location:{
+        required: true,
+      },
+      gender: {
+        type: String,
+        enum: ['male', 'female', 'other'],
+        required: true,
+      },
+      role: {
+        type: String,
+        enum: ['citizen', 'inspector', 'municipality'],
+        required: true,
+      },
+      location: {
         type: [],
-    },
-    isInvolved:{
+      },
+      isInvolved: {
         type: Boolean,
-        required : true,
+        default: false,
+      },
+      myRequests: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Request',
+          default: {},
+        },
+      ],
     },
-    myRequests:{
-        type: [mongoose.Schema.Types.ObjectId],
-        ref:'Request',
-    },
-},
-{timeStamp:true},
-)) ;
+    { timeStamp: true }
+  )
+);
 
-
-exports.User= User;
-
-
- 
-
-
-
+export default User;
