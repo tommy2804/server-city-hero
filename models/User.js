@@ -27,11 +27,13 @@ const User = new mongoose.model('User', new mongoose.Schema({
         required : true,
     },
     gender:{
-        type: ['male','female','other'],
+        type:String,
+        enum: ['male','female','other'],
         required : true,
     },
     role:{
-        type: ['citizen','inspector','municipality'],
+        type:String,
+        enum: ['citizen','inspector','municipality'],
         required : true,
     },
     location:{
@@ -39,12 +41,12 @@ const User = new mongoose.model('User', new mongoose.Schema({
     },
     isInvolved:{
         type: Boolean,
-        required : true,
+        default:false,
     },
-    myRequests:{
-        type: [mongoose.Schema.Types.ObjectId],
+    myRequests:[{
+        type: mongoose.Schema.Types.ObjectId,
         ref:'Request',
-    },
+    }],
 },
 {timeStamp:true},
 )) ;
