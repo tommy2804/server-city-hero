@@ -45,15 +45,12 @@ const User = new mongoose.model(
       },
       isInvolved: {
         type: Boolean,
-        default: false,
+        required: true,
       },
-      myRequests: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Request',
-          default: {},
-        },
-      ],
+      myRequests: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Request',
+      },
     },
     { timeStamp: true }
   )

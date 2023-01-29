@@ -7,6 +7,7 @@ import multer from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import authRoutes from './routes/auth.js';
+import requestRoutes from './routes/requests.js';
 
 const app = express();
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 app.use('/auth', authRoutes);
+app.use('/request', requestRoutes);
 
 mongoose.set('strictQuery', false);
 
