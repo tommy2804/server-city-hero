@@ -15,6 +15,7 @@ const User = new mongoose.model(
       email: {
         type: String,
         required: true,
+        unique: true,
       },
       password: {
         type: String,
@@ -36,10 +37,11 @@ const User = new mongoose.model(
       role: {
         type: String,
         enum: ['citizen', 'inspector', 'municipality'],
-        required: true,
+        default: 'municipality', // until the native
       },
       location: {
-        type: [],
+        type: {},
+        default: {},
       },
       isInvolved: {
         type: Boolean,
