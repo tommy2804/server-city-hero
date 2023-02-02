@@ -37,11 +37,14 @@ export const register = async (req, res) => {
       myRequests,
     });
     const savedUser = await newUser.save();
-
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
-    delete savedUser.password;
 
-    res.status(201).json({ token, savedUser });
+    res.status(201).json({
+      token,
+      id: savedUser._id,
+      email: savedUser.email,
+      fullName: savedUser.firstName + ' ' + savedUser.lastName,
+    });
   } catch (error) {
     res.status(500).json([error, error.message]);
   }
@@ -58,8 +61,13 @@ export const login = async (req, res) => {
     if (!isMatch) return res.status(403).json({ message: 'password is incorrect' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    delete user.password;
-    res.status(200).json({ token, user });
+
+    res.status(201).json({
+      id: user._id,
+      token,
+      email: user.email,
+      fullName: user.firstName + ' ' + user.lastName,
+    });
   } catch (error) {
     res.status(500).json([error, error.message]);
   }

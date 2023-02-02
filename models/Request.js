@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const requestSchema = mongoose.Schema(
   {
@@ -14,7 +15,7 @@ const requestSchema = mongoose.Schema(
     reqDescription: { type: String, maxLength: 255 },
     reqTitle: String,
     inCharge: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    inspectorComment: String
+    inspectorComment: String,
   },
   { timestamps: true }
 );

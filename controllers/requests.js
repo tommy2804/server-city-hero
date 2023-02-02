@@ -1,6 +1,7 @@
 import Request from '../models/Request.js';
 
 //add new request //citizen job
+
 export const newRequest = async (req, res) => {
     try{
         const{
@@ -81,13 +82,13 @@ export const getCitizenRequests = async (req, res) => {
 
 // get my request // Municipality
 export const getMunicipalityRequests = async (req, res) => {
-    try{
-        const requests = await Request.find()
-        res.send(requests)
-    }catch(error){
-        res.status(500).send(error)
-    }
-}
+  try {
+    const requests = await Request.find();
+    res.send(requests);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 // get my request // Inspector
 export const getInspectorRequests = async (req, res) => {
