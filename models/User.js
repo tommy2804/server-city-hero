@@ -15,6 +15,7 @@ const User = new mongoose.model(
       email: {
         type: String,
         required: true,
+        unique: true,
       },
       password: {
         type: String,
@@ -26,36 +27,34 @@ const User = new mongoose.model(
       },
       city: {
         type: String,
-        required : true,
-    },
-    gender:{
-        type: ['male','female','other'],
-        required : true,
-    },
-    role:{
-        type: ['citizen','inspector','municipality'],
-        required : true,
-    },
-    location:{
-        type: [],
+        required: true,
+      },
+      gender: {
+        type: String,
+        enum: ['male', 'female', 'other'],
+        required: true,
+      },
+      role: {
+        type: String,
+        enum: ['citizen', 'inspector', 'municipality'],
+        default: 'municipality', // until the native
+      },
+      location: {
+        type: {},
+        default: {},
       },
       isInvolved: {
         type: Boolean,
-        required : true,
-    },
-    myRequests:{
+        required: true,
+      },
+      myRequests: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref:'Request',
+        ref: 'Request',
+      },
     },
-},
-{timeStamp:true},
-)) ;
+    { timeStamp: true }
+  )
+);
 
-
-exports.User= User;
-
-
- 
-
-
+export default User;
 
