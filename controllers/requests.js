@@ -1,18 +1,31 @@
 import Request from '../models/Request.js';
+import { v2 as cloudinary } from 'cloudinary';
+import * as dotenv from 'dotenv';
+dotenv.config();
+cloudinary.config({
+  cloud_name: 'dyzpajqfj',
+  api_key: '614212553665672',
+  api_secret: 'mYCJQM7IAcBK8rp2mVDj2peE44Y',
+  secure: true,
+});
+
 //add new request //citizen job
 
 export const newRequest = async (req, res) => {
   try {
     const { reqPhoto, ofUser, reqStreet, reStreetNum, reqDescription, reqTitle, location } =
       req.body;
-    console.log('hi');
-    // let obj=Request.aggregate([{$group:{$max:{maxNumber:'$reqNumber'}}}]);
+    const imgUploud = await cloudinary.uploader.upload(reqPhoto, {
+      folder: 'ercecerc',
+      width: 300,
+      crop: 'scale',
+    });
+    console.log(imgUploud.secure_url);
     let array = await Request.find();
     const newReqNumber = array.length > 0 ? array[array.length - 1].reqNumber + 1 : 1;
-    // const newReqNumber= Request.find()+1:1
     const newRequest = new Request({
       reqNumber: newReqNumber,
-      reqPhoto,
+      reqPhoto: imgUploud.secure_url,
       ofUser,
       urgency: null,
       status: 'Sent to the municipality',
