@@ -16,7 +16,6 @@ const User = new mongoose.model(
         type: String,
         required: true,
         unique: true,
-        unique: true,
       },
       password: {
         type: String,
@@ -46,7 +45,7 @@ const User = new mongoose.model(
       },
       isInvolved: {
         type: Boolean,
-        required: true,
+        default: false,
       },
       myRequests: {
         type: [mongoose.Schema.Types.ObjectId],
