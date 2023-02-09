@@ -38,6 +38,8 @@ export const register = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+    console.log(savedUser);
+
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
 
     res.status(201).json({
@@ -47,7 +49,7 @@ export const register = async (req, res) => {
       fullName: savedUser.firstName + ' ' + savedUser.lastName,
     });
   } catch (error) {
-    res.status(500).json([error, error.message]);
+    res.status(500).json(error);
   }
 };
 
@@ -57,7 +59,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email });
     console.log(user);
 
     if (!user) return res.status(403).json({ message: 'User not found' });

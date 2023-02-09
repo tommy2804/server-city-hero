@@ -6,11 +6,9 @@ const User = new mongoose.model(
     {
       firstName: {
         type: String,
-        required: true,
       },
       lastName: {
         type: String,
-        required: true,
       },
       email: {
         type: String,
@@ -23,7 +21,6 @@ const User = new mongoose.model(
       },
       phoneNumber: {
         type: String,
-        required: true,
       },
       city: {
         type: String,
@@ -32,7 +29,6 @@ const User = new mongoose.model(
       gender: {
         type: String,
         enum: ['male', 'female', 'other'],
-        required: true,
       },
       role: {
         type: String,

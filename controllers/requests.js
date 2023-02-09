@@ -3,9 +3,9 @@ import { v2 as cloudinary } from 'cloudinary';
 import * as dotenv from 'dotenv';
 dotenv.config();
 cloudinary.config({
-  cloud_name: 'dyzpajqfj',
-  api_key: '614212553665672',
-  api_secret: 'mYCJQM7IAcBK8rp2mVDj2peE44Y',
+  cloud_name: 'dvueptfrd',
+  api_key: '448694456868161',
+  api_secret: 'e-cXouVCnrs-nEo-82RG4ZGzfCU',
   secure: true,
 });
 
@@ -15,17 +15,19 @@ export const newRequest = async (req, res) => {
   try {
     const { reqPhoto, ofUser, reqStreet, reStreetNum, reqDescription, reqTitle, location } =
       req.body;
-    const imgUploud = await cloudinary.uploader.upload(reqPhoto, {
-      folder: 'ercecerc',
-      width: 300,
-      crop: 'scale',
-    });
-    console.log(imgUploud.secure_url);
+    console.log(reqPhoto);
+    // const imgUploud = await cloudinary.uploader.upload(reqPhoto, {
+    //   folder: 'ReportPhoto',
+    //   width: 300,
+    //   height: 250,
+    //   Crop: 'fill',
+    // });
+
     let array = await Request.find();
     const newReqNumber = array.length > 0 ? array[array.length - 1].reqNumber + 1 : 1;
     const newRequest = new Request({
       reqNumber: newReqNumber,
-      reqPhoto: imgUploud.secure_url,
+      reqPhoto,
       ofUser,
       urgency: null,
       status: 'Sent to the municipality',
@@ -41,7 +43,8 @@ export const newRequest = async (req, res) => {
     await newRequest.save();
     res.status(201).send(newRequest);
   } catch (error) {
-    res.status(500).json([error, error.message]);
+    console.log(error);
+    res.status(500).send(error.message);
   }
 };
 
@@ -105,14 +108,11 @@ export const getMunicipalityRequests = async (req, res) => {
 
 // get my request // Inspector
 export const getInspectorRequests = async (req, res) => {
-  const { inCharge } = req.params;
   try {
-    const requests = await Request.find({ inCharge });
-    console.log(inCharge);
-
+    const requests = await Request.find({ inCharge: req.params.inCharge });
     res.send(requests);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).send(error);
   }
 };
 
