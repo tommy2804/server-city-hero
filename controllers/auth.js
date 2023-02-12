@@ -5,18 +5,7 @@ import jwt from 'jsonwebtoken';
 // REGISTER USER
 export const register = async (req, res) => {
   try {
-    const {
-      email,
-      password,
-      firstName,
-      lastName,
-      phoneNumber,
-      gender,
-      role,
-      location,
-      isInvolved,
-      myRequests,
-    } = req.body;
+    const { email, password, firstName, lastName, phoneNumber, role, location } = req.body;
 
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
@@ -30,24 +19,20 @@ export const register = async (req, res) => {
       lastName,
       phoneNumber,
       city: 'Tel Aviv',
-      gender,
+      gender: 'Male',
       role,
       location,
-      isInvolved,
-      myRequests,
     });
 
     const savedUser = await newUser.save();
     console.log(savedUser);
 
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: savedUser._id, fullName: `${savedUser.firstName + ' ' + savedUser.lastName}` },
+      process.env.JWT_SECRET
+    );
 
-    res.status(201).json({
-      token,
-      id: savedUser._id,
-      email: savedUser.email,
-      fullName: savedUser.firstName + ' ' + savedUser.lastName,
-    });
+    res.status(201).json(token);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -57,7 +42,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, location } = req.body;
 
     const user = await User.findOne({ email: email });
     console.log(user);
@@ -65,18 +50,14 @@ export const login = async (req, res) => {
     if (!user) return res.status(403).json({ message: 'User not found' });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log(isMatch);
 
     if (!isMatch) return res.status(403).json({ message: 'password is incorrect' });
 
+    await User.findByIdAndUpdate(user._id, { location });
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    res.status(201).json({
-      id: user._id,
-      token,
-      email: user.email,
-      fullName: user.firstName + ' ' + user.lastName,
-    });
+    res.status(201).json(token);
   } catch (error) {
     res.status(500).json([error, error.message]);
   }

@@ -1,13 +1,6 @@
 import Request from '../models/Request.js';
-import { v2 as cloudinary } from 'cloudinary';
 import * as dotenv from 'dotenv';
 dotenv.config();
-cloudinary.config({
-  cloud_name: 'dvueptfrd',
-  api_key: '448694456868161',
-  api_secret: 'e-cXouVCnrs-nEo-82RG4ZGzfCU',
-  secure: true,
-});
 
 //add new request //citizen job
 
@@ -16,12 +9,6 @@ export const newRequest = async (req, res) => {
     const { reqPhoto, ofUser, reqStreet, reStreetNum, reqDescription, reqTitle, location } =
       req.body;
     console.log(reqPhoto);
-    // const imgUploud = await cloudinary.uploader.upload(reqPhoto, {
-    //   folder: 'ReportPhoto',
-    //   width: 300,
-    //   height: 250,
-    //   Crop: 'fill',
-    // });
 
     let array = await Request.find();
     const newReqNumber = array.length > 0 ? array[array.length - 1].reqNumber + 1 : 1;
@@ -37,7 +24,7 @@ export const newRequest = async (req, res) => {
       reqDescription,
       reqTitle,
       inCharge: null,
-      inspectorComment: null,
+      inspectorComment: '',
       location,
     });
     await newRequest.save();
@@ -71,9 +58,9 @@ export const inspectorUpdate = async (req, res) => {
     const { reqIsDone, inspectorComment } = req.body;
     const update = await Request.findByIdAndUpdate(req.params.id, {
       $set: {
-        reqIsDone: reqIsDone,
+        reqIsDone,
         status: 'Hendeled by the inspector and returned to Municipality',
-        inspectorComment: inspectorComment,
+        inspectorComment,
       },
     });
     if (!update) {

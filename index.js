@@ -28,10 +28,7 @@ mongoose.set('strictQuery', false);
 
 const PORT = config.port;
 mongoose
-  .connect(
-    'mongodb+srv://tommy:tommy123123@cluster0.jjlpf6k.mongodb.net/finals?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(config.mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(PORT, () => console.log(`SERVER PORT: ${PORT}`));
   })
