@@ -1,8 +1,7 @@
 {
-  "name": "server",
+  "name": "server-cityhero",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -21,9 +20,9 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "tommy",
   "license": "ISC"
 }
