@@ -80,7 +80,7 @@ export const inspectorUpdate = async (req, res) => {
       res.status(400).send('this Request does not exist');
       return;
     }
-    res.send(update);
+    res.status(200).send(update);
   } catch (error) {
     res.status(500).json([error, error.message]);
   }
@@ -88,10 +88,14 @@ export const inspectorUpdate = async (req, res) => {
 
 // get my request // citizen
 export const getCitizenRequests = async (req, res) => {
+  console.log('s');
   try {
+    console.log(req.params.ofUser);
     const requests = await Request.find({ ofUser: req.params.ofUser });
+    console.log(requests);
     res.send(requests);
   } catch (error) {
+    console.log(error.message);
     res.status(500).send(error);
   }
 };
@@ -109,7 +113,9 @@ export const getMunicipalityRequests = async (req, res) => {
 // get my request // Inspector
 export const getInspectorRequests = async (req, res) => {
   try {
+    console.log(req.params.inCharge);
     const requests = await Request.find({ inCharge: req.params.inCharge });
+    console.log(requests);
     res.send(requests);
   } catch (error) {
     res.status(500).send(error);
