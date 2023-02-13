@@ -19,7 +19,7 @@ export const register = async (req, res) => {
       lastName,
       phoneNumber,
       city: 'Tel Aviv',
-      gender: 'Male',
+      gender: 'male',
       role,
       location,
     });
