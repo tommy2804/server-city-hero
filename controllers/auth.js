@@ -55,7 +55,10 @@ export const login = async (req, res) => {
 
     await User.findByIdAndUpdate(user._id, { location });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: user._id, fullName: user.firstName + ' ' + user?.lastName, city: user.city },
+      process.env.JWT_SECRET
+    );
 
     res.status(201).json(token);
   } catch (error) {

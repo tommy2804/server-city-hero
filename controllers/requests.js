@@ -100,10 +100,9 @@ export const getMunicipalityRequests = async (req, res) => {
 // get my request // Inspector
 export const getInspectorRequests = async (req, res) => {
   try {
-    console.log(req.params.inCharge);
     const requests = await Request.find({ inCharge: req.params.inCharge });
     console.log(requests);
-    res.send(requests);
+    res.status(200).send(requests);
   } catch (error) {
     res.status(500).send(error);
   }
